@@ -48,6 +48,10 @@ $container['reprController'] = function($c) {
 	return new \App\Controllers\RepresentationsController($c);
 };
 
+$container['dataController'] = function($c) {
+	return new \App\Controllers\DataController($c);
+};
+
 //GLOBALS
 $container['global'] = function($c) {
 	return $c->get('globals');

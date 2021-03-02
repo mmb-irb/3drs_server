@@ -8,6 +8,70 @@ class Utilities extends Model {
 
 	protected $tablePDB = 'PDB_Entry';
 
+	protected $mime_types = array(
+		"none" => "text/plain",
+		"log" => "text/plain",
+		"txt" => "text/plain",
+		"err" => "text/plain",
+		"out" => "text/plain",
+		"csv" => "text/plain",
+		"gff" => "text/plain",
+		"gff3"=> "text/plain",
+		"wig" => "text/plain",
+		"bed" => "text/plain",
+		"bedgraph"=> "text/plain",
+		"sh"  => "text/plain",
+		"pdb" => "text/plain",
+		"crd" => "chemical/x-pdb",
+		"xyz" => "chemical/x-xyz",
+		"cube" => "text/plain",
+		"xvg" => "text/plain",
+		"yml" => "text/yaml",
+		"yaml" => "text/yaml",
+		"cpt" => "application/octet-stream",
+		"edr" => "application/octet-stream",
+		"tpr" => "application/octet-stream",
+		"cdf" => "application/octet-stream",
+		"xtc" => "application/octet-stream",
+		"trr" => "application/octet-stream",
+		"gro" => "application/octet-stream",
+		"dcd" => "application/octet-stream",
+		"exe" => "application/octet-stream",
+		"gtar"=> "application/octet-stream",
+		"bam" => "application/octet-stream",
+		"sam" => "application/octet-stream",
+		"tar" => "application/x-tar",
+		"gz"  => "application/gzip",
+		"tgz" => "application/application/x-gzip",
+		"z"   => "application/octet-stream",
+		"rar" => "application/octet-stream",
+		"bz2" => "application/x-gzip",
+		"zip" => "application/zip",
+		"h"   => "text/plain",
+		"htm" => "text/html",
+		"html"=> "text/html",
+		"gif" => "image/gif",
+		"bmp" => "image/bmp",
+		"ico" => "image/x-icon",
+		"jfif"=> "image/pipeg",
+		"jpe" => "image/jpeg",
+		"jpeg"=> "image/jpeg",
+		"jpg" => "image/jpeg",
+		"rgb" => "image/x-rgb",
+		"svg" => "image/svg+xml",
+		"json" => "application/json",
+		"png" => "image/png",
+		"tif" => "image/tiff",
+		"tiff"=> "image/tiff",
+		"ps"  => "application/postscript",
+		"eps" => "application/postscript",
+		"js"  => "application/x-javascript",
+		"pdf" => "application/pdf",
+		"doc" => "application/msword",
+		"xls" => "application/vnd.ms-excel",
+		"ppt" => "application/vnd.ms-powerpoint",
+		"tsv" => "text/tab-separated-values");
+
 	public function getCURLData($url) {
 
 		$ch = curl_init();
@@ -72,7 +136,30 @@ class Utilities extends Model {
 
 		return $out;
 	}
+
+	public function newDate() {
+		$d = new \DateTime();
+		$d->setTimezone(new \DateTimeZone('Europe/Andorra'));
+		return $d;
+	}
 	
+	public function getContentType($type) {
+
+		if(!isset($this->mime_types[$type])) return "text/plain";
+		else return $this->mime_types[$type];
+
+	}
+
+
+
+
+
+
+
+
+
+
+
 	/*public function downloadFile($file) {
 		
   	if (file_exists($file)) {

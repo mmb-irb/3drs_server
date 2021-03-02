@@ -106,140 +106,78 @@ class DB {
 	}
 
 	// GRIDFS
-	// TO CKECK!!!
-
-	public function insertFile($id, $path, $fsname) {
+	// WRITE
+	public function insertFile($meta, $path, $fsname) {
 
 		$bucket = new \MongoDB\GridFS\Bucket($this->mng, $this->database);
 
 		$file = fopen($path, 'rb');
-		$meta = [ 'repr_id' => $id ];
-		return $bucket->uploadFromStream($fsname, $file, ['metadata' => $meta]);
+		$fileID = $bucket->uploadFromStream($fsname, $file, ['metadata' => $meta]);
+		return (string) new \MongoDB\BSON\ObjectId($fileID);
 
 	}
 
-	public function insertStringToFile($id, $fsname, $string) {
+	public function insertStringToFile($meta, $fsname, $string) {
 
 		$bucket = new \MongoDB\GridFS\Bucket($this->mng, $this->database);
 
-		$meta = [ 'repr_id' => $id];
 		$stream = $bucket->openUploadStream($fsname, ['metadata' => $meta]);
 
 		fwrite($stream, $string);
 		$fileID = $bucket->getFileIdForStream($stream);
 		fclose($stream);
 
-		return $fileID;
+		return (string) new \MongoDB\BSON\ObjectId($fileID);
 
 	}
 
-	/* BAC
-
-	public function findByMeta($options) {
-
-		$bucket = new \MongoDB\GridFS\Bucket($this->mng, $this->database);
-
-		return $bucket->find(['metadata' => $options]);
-
-	}
-
-	public function findByName($name) {
-
-		$bucket = new \MongoDB\GridFS\Bucket($this->mng, $this->database);
-
-		if($this->fsFileExists($name)) {
-			$stream = $bucket->openDownloadStreamByName($name);
-			return stream_get_contents($stream);
-		} else {
-			return false;
-		}
-			
-	}
-
-	public function findBinaryByName($name) {
-
-		$bucket = new \MongoDB\GridFS\Bucket($this->mng, $this->database);
-
-		if($this->fsFileExists($name)) {
-			$stream = $bucket->openDownloadStreamByName($name);
-			return $stream;
-		} else {
-			return false;
-		}
-			
-	}
-
-	public function removeFileByID($id) {
-
-		$bucket = new \MongoDB\GridFS\Bucket($this->mng, $this->database);
-		$bucket->delete($id);
-
-	}
-
-	public function fsFileExists($name) {
-
-		$bucket = new \MongoDB\GridFS\Bucket($this->mng, $this->database);
-
-		$cursor = $bucket->find(['filename' => $name]);
-
-		$count = 0;
-		foreach($cursor as $c) $count ++;
-
-		return (bool) $count;
-
-	} */
-
-	/* BIOB  API
-
+	// READ
 	public function findById($id) {
 
 		$bucket = new \MongoDB\GridFS\Bucket($this->mng, $this->database);
-
-		$stream = $bucket->openDownloadStream($id);
-		return stream_get_contents($stream);
-			
+		try {
+			$stream = $bucket->openDownloadStream(new \MongoDB\BSON\ObjectId($id));
+			return stream_get_contents($stream);
+		} catch(\Exception $e) {
+			return false;
+		}
+		
 	}
 
-	public function findByMeta($file_id) {
+	public function getMeta($id) {
 
 		$bucket = new \MongoDB\GridFS\Bucket($this->mng, $this->database);
-
-		return $bucket->find(['metadata.file_id' => $file_id]);
+		try {
+			$stream = $bucket->openDownloadStream(new \MongoDB\BSON\ObjectId($id));
+			$metadata = $bucket->getFileDocumentForStream($stream);
+			return $metadata->metadata;
+		} catch(\Exception $e) {
+			return false;
+		}
 
 	}
-	
-	public function findBySetOfMeta($metadata) {
+
+	public function findByMeta($metadata) {
 
 		$bucket = new \MongoDB\GridFS\Bucket($this->mng, $this->database);
-
-		return $bucket->find($metadata);
+		try {
+			return $bucket->find($metadata);
+		} catch(\Exception $e) {
+			return false;
+		}
 
 	}
 
 	public function findByName($name) {
 
 		$bucket = new \MongoDB\GridFS\Bucket($this->mng, $this->database);
-
-		if($this->fsFileExists($name)) {
+		try {
 			$stream = $bucket->openDownloadStreamByName($name);
 			return stream_get_contents($stream);
-		} else {
+		} catch(\Exception $e) {
 			return false;
 		}
 			
 	}
-
-	public function fsFileExists($name) {
-
-		$bucket = new \MongoDB\GridFS\Bucket($this->mng, $this->database);
-
-		$cursor = $bucket->find(['filename' => $name]);
-
-		$count = 0;
-		foreach($cursor as $c) $count ++;
-
-		return (bool) $count;
-
-	}*/
 	
 }

@@ -34,4 +34,33 @@ class APIController extends Controller {
             return $response->withJson($output, 200, JSON_PRETTY_PRINT);
       }
 
+      public function getProjectInfo($request, $response, $args) {
+            
+            $output = $this->dataController->retrieveProjectInfo($args['id']);
+            if(!$output) {
+                  $code = 404;
+                  $errMsg = "Requested project not found;";
+	            throw new \Exception($errMsg, $code);
+            }
+            return $response->withJson($output, 200, JSON_PRETTY_PRINT);
+
+      }
+
+      public function getFile($request, $response, $args) {
+
+            $f = $this->dataController->retrieveData($args['id']);
+            $i = $this->dataController->retrieveFileInfo($args['id']);
+
+            $contentype = $this->utils->getContentType($i->file_type);
+            $response = $response->withHeader('Content-Type', $contentype)
+                        ->withHeader('Content-Description', 'File Transfer')
+                        ->withHeader('Content-Disposition', 'attachment; filename="'.$i->name.'"')
+                        ->withHeader('Cache-Control', 'must-revalidate, post-check=0, pre-check=0')
+                        ->withHeader('Pragma', 'public');
+
+            echo $f;
+
+            return $response;
+      }
+
 }

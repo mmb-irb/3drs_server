@@ -52,7 +52,13 @@ class RepresentationsController extends Controller {
 		$files_id = [];
 		foreach ($files as $key => $file) {
 			$filepath = $id.'/'.$this->utils->sanitizeFileName($file->getClientFilename());
-			$files_id[] = $this->db->insertStringToFile($id, $filepath, file_get_contents($file->file));
+			// TODO: THINK IF repr_id IS NECESSARY OR TO PUT IT IN AN ARRAY WITH ALL THE REPRESENTATIONS
+			// THIS FILE BELONGS TO (SHARING CASES)
+			$meta = [ 'repr_id' => $id, 'file_type' => 'pdb', 'name' =>  pathinfo($filepath)['filename'].'.pdb'];
+			$files_id[] = [
+				'id' => $this->db->insertStringToFile($meta, $filepath, file_get_contents($file->file)),
+				'name' => pathinfo($filepath)['filename']
+			];
 		}
 
 		return $files_id;
@@ -66,13 +72,53 @@ class RepresentationsController extends Controller {
 		foreach ($files as $file) {
 			$url = sprintf($this->global['pdbapi'], $file);
 			$filepath = $id.'/'.$file;
-			$files_id[] = $this->db->insertStringToFile($id, $filepath, file_get_contents($url));
+			// TODO: THINK IF repr_id IS NECESSARY OR TO PUT IT IN AN ARRAY WITH ALL THE REPRESENTATIONS
+			// THIS FILE BELONGS TO (SHARING CASES)
+			$meta = [ 'repr_id' => $id, 'file_type' => 'pdb', 'name' =>  $file.'.pdb' ];
+			$files_id[] = [
+				'id' => $this->db->insertStringToFile($meta, $filepath, file_get_contents($url)),
+				'name' => $file
+			];
 		}
 
 		return $files_id;
 
 	}
-	
+
+	private function generateProjectData($id, $files) {
+
+		$content_files = [];
+		foreach ($files as $file) {
+			$content_files[] = [
+				'id' => $file['id'],
+				'name' => $file['name'],
+				'type' => null,
+				'trajectory' => null
+			];
+		}
+
+		$data = [
+			'_id' => $id,
+			'shared' => false,
+			'orientation' => null,
+			'uploadDate' => $this->utils->newDate(),
+			'background' => '#f1f1f1',
+			'files' => $content_files,
+			'currentStructure' => $content_files[0]['id'],
+			'structure' => [],
+			'representations' => [
+				[
+					'id' => 1,
+					'name' => 'Default',
+					'visible' => true,
+					'opacity' => 1
+				]
+			]
+		];
+
+		return $data;
+	}
+
 	// create new representation from uploaded files
 	private function newFromUploadedFile($files) {
 		list($check_input, $msg_check_input) = $this->checkInputFiles($files);
@@ -80,11 +126,9 @@ class RepresentationsController extends Controller {
 
 		// create representation ID
 		$id = uniqid('', true);
-		// generate representation data
-		$data["_id"] = $id;
 
-		// save files to GridFS
-		$data["files"] = $this->saveFiles($id, $files);
+		// generate data
+		$data = $this->generateProjectData($id, $this->saveFiles($id, $files));
 
 		// create entry in DB
 		$this->insertData($data);
@@ -94,17 +138,14 @@ class RepresentationsController extends Controller {
 
 	// create new representation from PDB files
 	private function newFromPDB($files) {
-
 		list($check_input, $msg_check_input) = $this->checkPDBFiles($files);
 		if(!$check_input) return ['error', null, $msg_check_input];
 
 		// create representation ID
 		$id = uniqid('', true);
-		// generate representation data
-		$data["_id"] = $id;
 
-		// save files to GridFS
-		$data["files"] = $this->savePDBFiles($id, $files);
+		// generate data
+		$data = $this->generateProjectData($id, $this->savePDBFiles($id, $files));
 
 		// create entry in DB
 		$this->insertData($data);
