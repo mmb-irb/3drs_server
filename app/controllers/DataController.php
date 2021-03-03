@@ -6,8 +6,8 @@ class DataController extends Controller {
 	protected $table = 'representations';
 
     // retrieve project info
-	public function retrieveProjectInfo($representation) {
-        return reset($this->db->getDocuments($this->table, ['_id' => $representation], []));
+	public function retrieveProjectInfo($id) {
+        return reset($this->db->getDocuments($this->table, ['_id' => $id], []));
 	}
 
 	// retrieve file info
@@ -19,5 +19,25 @@ class DataController extends Controller {
 	public function retrieveData($file) {
         return $this->db->findById($file);
 	}
+
+	// update data
+	public function updateData($id, $data) {
+		$dataset = [];
+		$datalist = [];
+		foreach ($data as $key => $value) {
+			$datalist[] = $key;
+			$dataset[$key] = $value;
+		}
+
+		if(!reset($this->db->getDocuments($this->table, ['_id' => $id], []))) {
+			$code = 404;
+            $errMsg = "Requested project not found;";
+	    	throw new \Exception($errMsg, $code);
+		}
+
+		$this->db->updateDocument($this->table, ['_id' => $id], ['$set' => $dataset]);
+		return ['success', 'Data ['.implode(', ', $datalist).'] for '.$id.' project successfully updated'];
+	}
+	
 
 }

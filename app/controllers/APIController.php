@@ -63,4 +63,16 @@ class APIController extends Controller {
             return $response;
       }
 
+      public function updateProject($request, $response, $args) {
+
+            $input = $request->getParsedBody();
+
+            list($status, $message) = $this->dataController->updateData($args['id'], $input);
+
+            return $response->withJson(['status' => $status, 'message' => $message], 200, JSON_PRETTY_PRINT);
+
+      }
+
+      // TODO SPECAIL FOR NEW REPRESENTATION? UNIQUE ID'S??? SEND ALL DATA FROM CLIENT AND PUSH NEW ONE WITH UNIQUE ID OR UPDATE
+
 }

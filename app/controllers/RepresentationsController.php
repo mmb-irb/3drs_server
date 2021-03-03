@@ -106,9 +106,10 @@ class RepresentationsController extends Controller {
 			'files' => $content_files,
 			'currentStructure' => $content_files[0]['id'],
 			'structure' => [],
+			'settings' => [],
 			'representations' => [
 				[
-					'id' => 1,
+					'id' => 1, // TO MODIFY BY UNIQUE IDENTIFIER
 					'name' => 'Default',
 					'visible' => true,
 					'opacity' => 1
