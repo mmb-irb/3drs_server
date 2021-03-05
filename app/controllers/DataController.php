@@ -22,17 +22,18 @@ class DataController extends Controller {
 
 	// update data
 	public function updateData($id, $data) {
-		$dataset = [];
-		$datalist = [];
-		foreach ($data as $key => $value) {
-			$datalist[] = $key;
-			$dataset[$key] = $value;
-		}
 
 		if(!reset($this->db->getDocuments($this->table, ['_id' => $id], []))) {
 			$code = 404;
             $errMsg = "Requested project not found;";
 	    	throw new \Exception($errMsg, $code);
+		}
+
+		$dataset = [];
+		$datalist = [];
+		foreach ($data as $key => $value) {
+			$datalist[] = $key;
+			$dataset[$key] = $value;
 		}
 
 		$this->db->updateDocument($this->table, ['_id' => $id], ['$set' => $dataset]);

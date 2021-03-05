@@ -10,6 +10,7 @@ return array(
     'App\\Controllers\\APIController' => $baseDir . '/app/controllers/APIController.php',
     'App\\Controllers\\Controller' => $baseDir . '/app/controllers/Controller.php',
     'App\\Controllers\\DataController' => $baseDir . '/app/controllers/DataController.php',
+    'App\\Controllers\\ProjectsController' => $baseDir . '/app/controllers/ProjectsController.php',
     'App\\Controllers\\RepresentationsController' => $baseDir . '/app/controllers/RepresentationsController.php',
     'App\\Handlers\\Error' => $baseDir . '/app/handlers/Error.php',
     'App\\Middleware\\CheckDBMiddleware' => $baseDir . '/app/middleware/CheckDBMiddleware.php',

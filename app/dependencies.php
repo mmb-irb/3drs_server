@@ -48,6 +48,10 @@ $container['reprController'] = function($c) {
 	return new \App\Controllers\RepresentationsController($c);
 };
 
+$container['projectsController'] = function($c) {
+	return new \App\Controllers\ProjectsController($c);
+};
+
 $container['dataController'] = function($c) {
 	return new \App\Controllers\DataController($c);
 };

@@ -19,5 +19,14 @@ $app->group('', function() use ($container) {
 	$this->get('/download/{id}', 'apiController:getFile');
 	// update project
 	$this->post('/update/{id}', 'apiController:updateProject');
+	// representations
+	$this->group('/representation', function() use ($container) {  
+		// create new representation in project 
+		$this->post('/{id}', 'apiController:newRepresentation');
+		// update representation
+		$this->patch('/{id}/{repr}', 'apiController:updateRepresentation');
+		// delete representation
+		// $this->delete('/{id}/{repr}', 'apiController:deleteRepresentation');
+	});
 
 })->add(new CheckDBMiddleware($container));

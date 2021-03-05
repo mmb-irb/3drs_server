@@ -39,17 +39,17 @@ class DB {
 
 	}
 
-	public function updateDocument($collection, $doc, $set) {
+	public function updateDocument($collection, $doc, $set, $options = null) {
 	
 		$bulk = new \MongoDB\Driver\BulkWrite;
     
-   		$bulk->update($doc, $set);
+   		$bulk->update($doc, $set, $options);
 
 		$this->mng->executeBulkWrite($this->database.".".$collection, $bulk);
 
 	}
 
-	public function deleteDocument($collection, $doc) {
+	/*public function deleteDocument($collection, $doc) {
 	
 		$bulk = new \MongoDB\Driver\BulkWrite;
     
@@ -67,9 +67,9 @@ class DB {
 
 		$this->mng->executeBulkWrite($this->database.".".$collection, $bulk);
 
-	}
+	}*/
 
-	public function sum($collection, $field) {
+	/*public function sum($collection, $field) {
 
 		$command = new \MongoDB\Driver\Command([
 
@@ -103,7 +103,7 @@ class DB {
  		   return $document->n;
 		}	
 	
-	}
+	}*/
 
 	// GRIDFS
 	// WRITE

@@ -20,7 +20,7 @@ class APIController extends Controller {
       public function uploadPDB($request, $response, $args) {
 
             $input = $request->getParsedBody();
-            list($status, $id, $message) = $this->reprController->createNewRepresentation($input['structures'], 0);
+            list($status, $id, $message) = $this->projectsController->createNewProject($input['structures'], 0);
 
             $output = ['status' => $status, 'id' => $id, 'message' => $message];
             return $response->withJson($output, 200, JSON_PRETTY_PRINT);
@@ -28,7 +28,7 @@ class APIController extends Controller {
 
       public function uploadFile($request, $response, $args) {
             $files = $request->getUploadedFiles();
-            list($status, $id, $message) = $this->reprController->createNewRepresentation($files, 1);
+            list($status, $id, $message) = $this->projectsController->createNewProject($files, 1);
 
             $output = ['status' => $status, 'id' => $id, 'message' => $message];
             return $response->withJson($output, 200, JSON_PRETTY_PRINT);
@@ -73,6 +73,24 @@ class APIController extends Controller {
 
       }
 
-      // TODO SPECAIL FOR NEW REPRESENTATION? UNIQUE ID'S??? SEND ALL DATA FROM CLIENT AND PUSH NEW ONE WITH UNIQUE ID OR UPDATE
+      public function newRepresentation($request, $response, $args) {
+
+            $input = $request->getParsedBody();
+
+            list($status, $representation, $message) = $this->reprController->createRepresentation($args['id'], $input);
+
+            return $response->withJson(['status' => $status, 'representation' => $representation, 'message' => $message], 200, JSON_PRETTY_PRINT);
+
+      }
+
+      public function updateRepresentation($request, $response, $args) {
+
+            $input = $request->getParsedBody();
+
+            list($status, $message) = $this->reprController->updateRepresentation($args['id'], $args['repr'], $input);
+
+            return $response->withJson(['status' => $status, 'message' => $message], 200, JSON_PRETTY_PRINT);
+
+      }
 
 }
