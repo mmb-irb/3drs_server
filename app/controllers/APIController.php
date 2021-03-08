@@ -93,4 +93,12 @@ class APIController extends Controller {
 
       }
 
+      public function deleteRepresentation($request, $response, $args) {
+
+            list($status, $representation, $message) = $this->reprController->deleteRepresentation($args['id'], $args['repr']);
+
+            return $response->withJson(['status' => $status, 'newCurrentRepresentation' => $representation,  'message' => $message], 200, JSON_PRETTY_PRINT);
+
+      }
+
 }

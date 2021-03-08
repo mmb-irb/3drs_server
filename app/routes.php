@@ -26,7 +26,7 @@ $app->group('', function() use ($container) {
 		// update representation
 		$this->patch('/{id}/{repr}', 'apiController:updateRepresentation');
 		// delete representation
-		// $this->delete('/{id}/{repr}', 'apiController:deleteRepresentation');
+		$this->delete('/{id}/{repr}', 'apiController:deleteRepresentation');
 	});
 
 })->add(new CheckDBMiddleware($container));
