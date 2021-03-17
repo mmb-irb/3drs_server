@@ -18,7 +18,7 @@ class RepresentationsController extends Controller {
 		foreach ($project->files as $file) {
 			$structures[] = [
 				'id' => $file->id,
-				'selection' => ''
+				'selection' => 'not(*)'
 			];
 		}
 
@@ -28,10 +28,31 @@ class RepresentationsController extends Controller {
 			'name' => $data['name'],
 			'visible' => true,
 			'opacity' => 1,
-			'navigation' => [],
+			'settings' => $project->settings,
 			'structures' => $structures,
 			'mol_repr' => 'cartoon',
-            'radius' => 5,
+            'radius' => [
+				'licorice' => [
+					'value' => 0.3,
+					'min' => 0.2,
+					'max' => 1
+				],
+				'ball+stick' => [
+					'value' => 0.3,
+					'min' => 0.2,
+					'max' => 0.6
+				],
+				'backbone' => [
+					'value' => 0.6,
+					'min' => 0.2,
+					'max' => 1
+				],
+				'spacefill' => [
+					'value' => 1.5,
+					'min' => 1,
+					'max' => 3
+				]
+			],
             'color_scheme' => 'sstruc',
 			'color' => '#f1f1f1'
 		];
