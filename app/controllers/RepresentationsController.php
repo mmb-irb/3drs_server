@@ -5,6 +5,14 @@ class RepresentationsController extends Controller {
 
 	protected $table = 'representations';	
 
+	private function checkRepresentationName($name) {
+
+		$check = reset($this->db->getDocuments($this->table, ['representations.name' => $name], []));
+
+		if($check) return true;
+		else return false;
+	}
+
     // create representation
 	public function createRepresentation($id, $data) {
 
@@ -18,19 +26,27 @@ class RepresentationsController extends Controller {
 		foreach ($project->files as $file) {
 			$structures[] = [
 				'id' => $file->id,
-				'selection' => 'not(*)'
+				'selection' => [
+					'string' => 'not(*)',
+					'molecules' => []
+				]
 			];
 		}
+
+		// avoid repeated representation name
+		$name_exists = $this->checkRepresentationName($data['name']);
+		if($name_exists) $name = $data['name'].' ('.substr(md5(microtime()),rand(0,26),3).')';
+		else $name = $data['name'];
 
 		$repr = uniqid('');
 		$new_repr = [
 			'id' => $repr, 
-			'name' => $data['name'],
+			'name' => $name,
 			'visible' => true,
 			'opacity' => 1,
 			'settings' => $project->settings,
 			'structures' => $structures,
-			'mol_repr' => 'cartoon',
+			'mol_repr' => 'ribbon',
             'radius' => [
 				'licorice' => [
 					'value' => 0.3,

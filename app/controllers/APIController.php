@@ -42,7 +42,13 @@ class APIController extends Controller {
                   $errMsg = "Requested project not found;";
 	            throw new \Exception($errMsg, $code);
             }
-            return $response->withJson($output, 200, JSON_PRETTY_PRINT);
+            return $response
+
+                        /*->withHeader('Access-Control-Allow-Origin', 'https://mmb.irbbarcelona.org')
+                        ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+                        ->withHeader('Access-Control-Allow-Methods', 'GET')*/
+
+                        ->withJson($output, 200, JSON_PRETTY_PRINT);
 
       }
 
@@ -56,6 +62,11 @@ class APIController extends Controller {
                         ->withHeader('Content-Description', 'File Transfer')
                         ->withHeader('Content-Disposition', 'attachment; filename="'.$i->name.'"')
                         ->withHeader('Cache-Control', 'must-revalidate, post-check=0, pre-check=0')
+
+                        /*->withHeader('Access-Control-Allow-Origin', 'https://mmb.irbbarcelona.org')
+                        ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+                        ->withHeader('Access-Control-Allow-Methods', 'GET')*/
+
                         ->withHeader('Pragma', 'public');
 
             echo $f;
