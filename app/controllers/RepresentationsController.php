@@ -26,6 +26,7 @@ class RepresentationsController extends Controller {
 		foreach ($project->files as $file) {
 			$structures[] = [
 				'id' => $file->id,
+				'custom' => false,
 				'selection' => [
 					'string' => 'not(*)',
 					'molecules' => []

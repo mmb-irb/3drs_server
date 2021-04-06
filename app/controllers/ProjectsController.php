@@ -101,7 +101,7 @@ class ProjectsController extends Controller {
 
 		$data = [
 			'_id' => $id,
-			'shared' => false,
+			'status' => 'w',
 			'orientation' => null,
 			'uploadDate' => $this->utils->newDate(),
 			'background' => '#f1f1f1',
