@@ -26,9 +26,9 @@ class RepresentationsController extends Controller {
 		foreach ($project->files as $file) {
 			$structures[] = [
 				'id' => $file->id,
-				'custom' => false,
 				'selection' => [
-					'string' => 'not(*)',
+					'string' => '*',
+					'custom' => '',
 					'molecules' => []
 				]
 			];
@@ -47,7 +47,7 @@ class RepresentationsController extends Controller {
 			'opacity' => 1,
 			'settings' => $project->settings,
 			'structures' => $structures,
-			'mol_repr' => 'ribbon',
+			'mol_repr' => 'line',
             'radius' => [
 				'licorice' => [
 					'value' => 0.3,
