@@ -54,10 +54,11 @@ class ProjectsController extends Controller {
 			$filepath = $id.'/'.$this->utils->sanitizeFileName($file->getClientFilename());
 			// TODO: THINK IF project_id IS NECESSARY OR TO PUT IT IN AN ARRAY WITH ALL THE PROJECTS
 			// THIS FILE BELONGS TO (SHARING CASES)
-			$meta = [ 'project_id' => $id, 'file_type' => 'pdb', 'name' =>  pathinfo($filepath)['filename'].'.pdb'];
+			$meta = [ 'project_id' => $id, 'file_type' => pathinfo($filepath)['extension'], 'name' =>  pathinfo($filepath)['filename'].'.'.pathinfo($filepath)['extension']];
 			$files_id[] = [
 				'id' => $this->db->insertStringToFile($meta, $filepath, file_get_contents($file->file)),
-				'name' => pathinfo($filepath)['filename']
+				'name' => pathinfo($filepath)['filename'],
+				'ext' => pathinfo($filepath)['extension']
 			];
 		}
 
@@ -77,11 +78,46 @@ class ProjectsController extends Controller {
 			$meta = [ 'project_id' => $id, 'file_type' => 'pdb', 'name' =>  $file.'.pdb' ];
 			$files_id[] = [
 				'id' => $this->db->insertStringToFile($meta, $filepath, file_get_contents($url)),
-				'name' => $file
+				'name' => $file,
+				'ext' => '.pdb'
 			];
 		}
 
 		return $files_id;
+
+	}
+
+	// save uploaded files to **GridFS** (now FS)
+	private function saveTrajectory($project, $structure, $files) {
+	
+		/*$files_id = [];
+		foreach ($files as $key => $file) {
+			$filepath = $id.'/'.$this->utils->sanitizeFileName($file->getClientFilename());
+			// TODO: THINK IF project_id IS NECESSARY OR TO PUT IT IN AN ARRAY WITH ALL THE PROJECTS
+			// THIS FILE BELONGS TO (SHARING CASES)
+			$meta = [ 'project_id' => $id, 'file_type' => pathinfo($filepath)['extension'], 'name' =>  pathinfo($filepath)['filename'].'.'.pathinfo($filepath)['extension']];
+			$files_id[] = [
+				'id' => $this->db->insertStringToFile($meta, $filepath, file_get_contents($file->file)),
+				'name' => pathinfo($filepath)['filename'],
+				'ext' => pathinfo($filepath)['extension']
+			];
+		}
+
+		return $files_id;*/
+
+		// create project folder
+		//var_dump($this->global['trajPath'].$project);
+		if(!file_exists($this->global['trajPath'].$project)) $dirOk = mkdir($this->global['trajPath'].$project, 0755);
+		//var_dump($dirOk);
+
+		$file = reset($files);
+		$fname = $file->getClientFilename();
+		$filepath = $project.'/'.$structure.'.'.pathinfo($fname)['extension'];
+		$size = $file->getSize();
+		//var_dump($this->global['trajPath'].$filepath, $size);
+		$file->moveTo($this->global['trajPath'].$filepath);
+
+		return [$filepath, $size];
 
 	}
 
@@ -92,6 +128,7 @@ class ProjectsController extends Controller {
 			$content_files[] = [
 				'id' => $file['id'],
 				'name' => $file['name'],
+				'ext' => $file['ext'],
 				'type' => null,
 				'trajectory' => null
 			];
@@ -171,6 +208,32 @@ class ProjectsController extends Controller {
 			default:
 					return ['error', null, 'Something went wrong, please try again'];
 		}
+
+	}
+
+	public function addTrajectory($input, $files) {
+
+		$project = $input['project'];
+		$structure = $input['structure'];
+
+		list($check_input, $msg_check_input) = $this->checkInputFiles($files);
+		if(!$check_input) return ['error', null, $msg_check_input];
+
+		list($path, $size) = $this->saveTrajectory($project, $structure, $files);
+
+		$data = [
+			'path' => $path,
+			'size' => $size,
+			'uploadDate' => $this->utils->newDate(),
+		];
+
+		$this->db->updateDocument(
+            $this->table, 
+            ['$and' => [ ['_id' => $project], ['files.id' => $structure] ]],
+			['$set' => ['files.$.trajectory' => $data]]
+        );
+
+		return ['succes', $project, 'Trajectory successfully added to '.$structure.' structure'];
 
 	}
 

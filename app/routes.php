@@ -12,6 +12,7 @@ $app->group('', function() use ($container) {
 	$this->group('/upload', function() use ($container) {   
 		$this->post('/pdb[/]', 'apiController:uploadPDB');
 		$this->post('/file[/]', 'apiController:uploadFile');
+		$this->post('/traj[/]', 'apiController:uploadTrajectory');
 	});
 	// get project metadata
 	$this->get('/project/{id}', 'apiController:getProjectInfo');

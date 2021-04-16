@@ -34,6 +34,16 @@ class APIController extends Controller {
             return $response->withJson($output, 200, JSON_PRETTY_PRINT);
       }
 
+      public function uploadTrajectory($request, $response, $args) {
+            $files = $request->getUploadedFiles();
+            $input = $request->getParsedBody();
+
+            list($status, $id, $message) = $this->projectsController->addTrajectory($input, $files);
+
+            $output = ['status' => $status, 'id' => $id, 'message' => $message];
+            return $response->withJson($output, 200, JSON_PRETTY_PRINT);
+      }
+
       public function getProjectInfo($request, $response, $args) {
             
             $output = $this->dataController->retrieveProjectInfo($args['id']);
