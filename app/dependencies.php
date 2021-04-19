@@ -52,6 +52,10 @@ $container['projectsController'] = function($c) {
 	return new \App\Controllers\ProjectsController($c);
 };
 
+$container['trajectoriesController'] = function($c) {
+	return new \App\Controllers\TrajectoriesController($c);
+};
+
 $container['dataController'] = function($c) {
 	return new \App\Controllers\DataController($c);
 };

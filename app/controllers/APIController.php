@@ -38,7 +38,7 @@ class APIController extends Controller {
             $files = $request->getUploadedFiles();
             $input = $request->getParsedBody();
 
-            list($status, $id, $message) = $this->projectsController->addTrajectory($input, $files);
+            list($status, $id, $message) = $this->trajectoriesController->addTrajectory($input, $files);
 
             $output = ['status' => $status, 'id' => $id, 'message' => $message];
             return $response->withJson($output, 200, JSON_PRETTY_PRINT);
@@ -119,6 +119,16 @@ class APIController extends Controller {
             list($status, $representation, $message) = $this->reprController->deleteRepresentation($args['id'], $args['repr']);
 
             return $response->withJson(['status' => $status, 'newCurrentRepresentation' => $representation,  'message' => $message], 200, JSON_PRETTY_PRINT);
+
+      }
+
+      public function updateTrajectory($request, $response, $args) {
+
+            $input = $request->getParsedBody();
+
+            list($status, $message) = $this->trajectoriesController->updateTrajectory($args['id'], $input);
+
+            return $response->withJson(['status' => $status, 'message' => $message], 200, JSON_PRETTY_PRINT);
 
       }
 

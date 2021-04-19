@@ -29,5 +29,10 @@ $app->group('', function() use ($container) {
 		// delete representation
 		$this->delete('/{id}/{repr}', 'apiController:deleteRepresentation');
 	});
+	// trajectories
+	$this->group('/trajectory', function() use ($container) {  
+		// update trajectory
+		$this->patch('/{id}', 'apiController:updateTrajectory');
+	});
 
 })->add(new CheckDBMiddleware($container));
