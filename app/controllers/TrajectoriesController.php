@@ -77,7 +77,9 @@ class TrajectoriesController extends Controller {
 				'step' => 1,
 				'init' => 0,
 				'end' => null,
-				'mode' => 'once'
+				'range' => [ 0, null],
+				'loop' => false,
+				'interpolation' => ''
 			],
 			'uploadDate' => $this->utils->newDate(),
 		];
@@ -88,7 +90,7 @@ class TrajectoriesController extends Controller {
 			['$set' => ['files.$.trajectory' => $data]]
         );
 
-		return ['succes', $project, 'Trajectory successfully added to '.$structure.' structure'];
+		return ['success', $project, 'Trajectory successfully added to '.$structure.' structure'];
 
 	}
 
