@@ -143,6 +143,13 @@ class Utilities extends Model {
 		return $d;
 	}
 	
+	public function newExpDate() {
+		$d = new \DateTime();
+		$d->add(new \DateInterval('P'.$this->global['expiration'].'D'));
+		$d->setTimezone(new \DateTimeZone('Europe/Andorra'));
+		return $d;
+	}
+
 	public function getContentType($type) {
 
 		if(!isset($this->mime_types[$type])) return "text/plain";

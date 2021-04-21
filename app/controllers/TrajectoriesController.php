@@ -65,7 +65,7 @@ class TrajectoriesController extends Controller {
 		$structure = $input['structure'];
 
 		list($check_input, $msg_check_input) = $this->checkInputFiles($files);
-		if(!$check_input) return ['error', null, $msg_check_input];
+		if(!$check_input) return ['error', null, null, $msg_check_input];
 
 		list($path, $size) = $this->saveTrajectory($project, $structure, $files);
 
@@ -90,7 +90,7 @@ class TrajectoriesController extends Controller {
 			['$set' => ['files.$.trajectory' => $data]]
         );
 
-		return ['success', $project, 'Trajectory successfully added to '.$structure.' structure'];
+		return ['success', $project, $data, 'Trajectory successfully added to '.$structure.' structure'];
 
 	}
 

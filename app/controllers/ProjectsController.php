@@ -79,7 +79,7 @@ class ProjectsController extends Controller {
 			$files_id[] = [
 				'id' => $this->db->insertStringToFile($meta, $filepath, file_get_contents($url)),
 				'name' => $file,
-				'ext' => '.pdb'
+				'ext' => 'pdb'
 			];
 		}
 
@@ -104,9 +104,16 @@ class ProjectsController extends Controller {
 
 		$data = [
 			'_id' => $id,
-			'status' => 'w',
 			'orientation' => null,
-			'uploadDate' => $this->utils->newDate(),
+			'projectSettings' => [
+				'status' => 'w',
+				'title' => null,
+				'author' => null,
+				'toasts' => true,
+				'forkable' => true,
+				'uploadDate' => $this->utils->newDate(),
+				'expiration' => $this->utils->newExpDate()
+			],
 			'background' => '#f1f1f1',
 			'files' => $content_files,
 			'currentStructure' => $content_files[0]['id'],

@@ -38,9 +38,9 @@ class APIController extends Controller {
             $files = $request->getUploadedFiles();
             $input = $request->getParsedBody();
 
-            list($status, $id, $message) = $this->trajectoriesController->addTrajectory($input, $files);
+            list($status, $id, $data, $message) = $this->trajectoriesController->addTrajectory($input, $files);
 
-            $output = ['status' => $status, 'id' => $id, 'message' => $message];
+            $output = ['status' => $status, 'id' => $id, 'data' => $data, 'message' => $message];
             return $response->withJson($output, 200, JSON_PRETTY_PRINT);
       }
 
