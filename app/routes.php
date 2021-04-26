@@ -29,6 +29,8 @@ $app->group('', function() use ($container) {
 		// delete representation
 		$this->delete('/{id}/{repr}', 'apiController:deleteRepresentation');
 	});
+	// share project
+	$this->post('/share/{id}', 'apiController:shareProject');
 	// trajectories
 	$this->group('/trajectory', function() use ($container) {  
 		// update trajectory

@@ -94,6 +94,14 @@ class APIController extends Controller {
 
       }
 
+      public function shareProject($request, $response, $args) {
+
+            list($status, $project, $message) = $this->projectsController->cloneProject($args['id']);
+
+            return $response->withJson(['status' => $status, 'project' => $project, 'message' => $message], 200, JSON_PRETTY_PRINT);
+
+      }
+
       public function newRepresentation($request, $response, $args) {
 
             $input = $request->getParsedBody();

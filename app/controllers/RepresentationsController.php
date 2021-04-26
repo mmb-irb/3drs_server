@@ -5,9 +5,11 @@ class RepresentationsController extends Controller {
 
 	protected $table = 'representations';	
 
-	private function checkRepresentationName($name) {
+	private function checkRepresentationName($id, $name) {
 
-		$check = reset($this->db->getDocuments($this->table, ['representations.name' => $name], []));
+		//$check = reset($this->db->getDocuments($this->table, ['representations.name' => $name], []));
+		$check = reset($this->db->getDocuments($this->table, ['$and' => [ ['_id' => $id], ['representations.name' => $name] ]], []));
+		//['$and' => [ ['_id' => $id], ['representations.id' => $repr] ]]
 
 		if($check) return true;
 		else return false;
@@ -35,9 +37,9 @@ class RepresentationsController extends Controller {
 		}
 
 		// avoid repeated representation name
-		$name_exists = $this->checkRepresentationName($data['name']);
+		/*$name_exists = $this->checkRepresentationName($id, $data['name']);
 		if($name_exists) $name = $data['name'].' ('.substr(md5(microtime()),rand(0,26),3).')';
-		else $name = $data['name'];
+		else*/ $name = $data['name'];
 
 		$repr = uniqid('');
 		$new_repr = [
