@@ -96,7 +96,15 @@ class APIController extends Controller {
 
       public function shareProject($request, $response, $args) {
 
-            list($status, $project, $message) = $this->projectsController->cloneProject($args['id']);
+            list($status, $project, $message) = $this->projectsController->cloneProject($args['id'], 'share');
+
+            return $response->withJson(['status' => $status, 'project' => $project, 'message' => $message], 200, JSON_PRETTY_PRINT);
+
+      }
+
+      public function forkProject($request, $response, $args) {
+
+            list($status, $project, $message) = $this->projectsController->cloneProject($args['id'], 'fork');
 
             return $response->withJson(['status' => $status, 'project' => $project, 'message' => $message], 200, JSON_PRETTY_PRINT);
 

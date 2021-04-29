@@ -185,22 +185,30 @@ class ProjectsController extends Controller {
 	}
 
 	// clone existing project for sharing
-	public function cloneProject($id) {
+	public function cloneProject($id, $type) {
 
 		// generate new id
 		$new_id = uniqid('', true);
 
 		// get $id project data
 		$project = reset($this->db->getDocuments($this->table, ['_id' => $id], []));
-		// get original project projectSettings
-		$d['projectSettings'] = $project->projectSettings;
-		// modify original project projectSettings
-		$d['projectSettings']->status = 'ws';
-		list($s, $m) = $this->dataController->updateData($id, $d);
+
+		$new_project_status = 'w';
+		// update parent project status in case is shared
+		if($type === 'share') {
+			
+			// get original project projectSettings
+			$d['projectSettings'] = $project->projectSettings;
+			// modify original project projectSettings
+			$d['projectSettings']->status = 'ws';
+			list($s, $m) = $this->dataController->updateData($id, $d);
+
+			$new_project_status = 'rs';
+		}
 
 		// modify _id, uploadDate and expiration
 		$project->_id = $new_id;
-		$project->projectSettings->status = 'rs';
+		$project->projectSettings->status = $new_project_status;
 		$project->projectSettings->uploadDate = $this->utils->newDate();
 		$project->projectSettings->expiration = $this->utils->newExpDate();
 

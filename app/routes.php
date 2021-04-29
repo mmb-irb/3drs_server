@@ -31,6 +31,8 @@ $app->group('', function() use ($container) {
 	});
 	// share project
 	$this->post('/share/{id}', 'apiController:shareProject');
+	// fork project
+	$this->post('/fork/{id}', 'apiController:forkProject');
 	// trajectories
 	$this->group('/trajectory', function() use ($container) {  
 		// update trajectory
