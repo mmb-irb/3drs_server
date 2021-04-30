@@ -30,6 +30,10 @@ return [
 		//'pdbapi' => 'http://mmb.irbbarcelona.org/api/pdb/%s'
 		//'pdbapi' => 'https://files.rcsb.org/download/%s.pdb'
 		'pdbapi' => 'http://mdb-login.bsc.es/api/pdb/%s',
+		'filetypes' => [
+			'structure' => [ 'pdb', 'gro' ],
+			'trajectory' => [ 'dcd', 'xtc' ]
+		],
 		'expiration' => 20
 	],
 

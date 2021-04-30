@@ -17,6 +17,11 @@ class TrajectoriesController extends Controller {
 			if($file->getSize() === 0) {
 				return [false, "Error: empty files not allowed."];
 			}
+			// correct type
+			$ext =  pathinfo($file->getClientFilename())['extension'];
+			if(!in_array($ext, $this->global['filetypes']['trajectories'])) {
+				return [false, "Error: $ext extension is not allowed."];
+			}
 		}
 
 		return [true, "Files ok."];

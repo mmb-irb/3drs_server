@@ -11,11 +11,18 @@ class ProjectsController extends Controller {
 	private function checkInputFiles($files) {
 
 		foreach ($files as $key => $file) {
+			// error
 			if($file->getError() !== UPLOAD_ERR_OK) {
 				return [false, "Error: some of the files was not correctly uploaded."];
 			}
+			// not empty
 			if($file->getSize() === 0) {
 				return [false, "Error: empty files not allowed."];
+			}
+			// correct type
+			$ext =  pathinfo($file->getClientFilename())['extension'];
+			if(!in_array($ext, $this->global['filetypes']['structures'])) {
+				return [false, "Error: $ext extension is not allowed."];
 			}
 		}
 
