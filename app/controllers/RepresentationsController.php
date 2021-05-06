@@ -46,6 +46,7 @@ class RepresentationsController extends Controller {
 			'id' => $repr, 
 			'name' => $name,
 			'visible' => true,
+			'label' => false,
 			'opacity' => 1,
 			'settings' => $project->settings,
 			'structures' => $structures,

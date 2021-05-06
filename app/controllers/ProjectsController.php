@@ -107,6 +107,22 @@ class ProjectsController extends Controller {
 			];
 		}
 
+		$content_distances = [];
+		foreach ($files as $file) {
+			$content_distances[] = [
+				'id' => $file['id'],
+				'atomPairs' => []
+			];
+		}
+
+		$content_angles = [];
+		foreach ($files as $file) {
+			$content_angles[] = [
+				'id' => $file['id'],
+				'atomTriples' => []
+			];
+		}
+
 		$default_representation = uniqid('');
 
 		$data = [
@@ -121,6 +137,9 @@ class ProjectsController extends Controller {
 				'uploadDate' => $this->utils->newDate(),
 				'expiration' => $this->utils->newExpDate()
 			],
+			'superpositions' => [],
+			'distances' => $content_distances,
+			'angles' => $content_angles,
 			'background' => '#f1f1f1',
 			'files' => $content_files,
 			'currentStructure' => $content_files[0]['id'],
