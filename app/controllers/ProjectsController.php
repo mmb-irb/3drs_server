@@ -107,7 +107,7 @@ class ProjectsController extends Controller {
 			];
 		}
 
-		$content_distances = [];
+		/*$content_distances = [];
 		foreach ($files as $file) {
 			$content_distances[] = [
 				'id' => $file['id'],
@@ -118,6 +118,21 @@ class ProjectsController extends Controller {
 		$content_angles = [];
 		foreach ($files as $file) {
 			$content_angles[] = [
+				'id' => $file['id'],
+				'atomTriples' => []
+			];
+		}*/
+
+		$content_measurements = [
+			'distances' => [],
+			'angles' => []
+		];
+		foreach ($files as $file) {
+			$content_measurements['distances'][] = [
+				'id' => $file['id'],
+				'atomPairs' => []
+			];
+			$content_measurements['angles'][] = [
 				'id' => $file['id'],
 				'atomTriples' => []
 			];
@@ -138,8 +153,9 @@ class ProjectsController extends Controller {
 				'expiration' => $this->utils->newExpDate()
 			],
 			'superpositions' => [],
-			'distances' => $content_distances,
-			'angles' => $content_angles,
+			//'distances' => $content_distances,
+			//'angles' => $content_angles,
+			'measurements' => $content_measurements,
 			'background' => '#f1f1f1',
 			'files' => $content_files,
 			'currentStructure' => $content_files[0]['id'],
