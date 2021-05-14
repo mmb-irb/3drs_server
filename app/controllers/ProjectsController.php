@@ -145,8 +145,8 @@ class ProjectsController extends Controller {
 			'orientation' => null,
 			'projectSettings' => [
 				'status' => 'w',
-				'title' => null,
-				'author' => null,
+				'title' => 'New project',
+				'caption' => null,
 				'toasts' => true,
 				'forkable' => true,
 				'uploadDate' => $this->utils->newDate(),
