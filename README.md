@@ -1,38 +1,24 @@
-<snippet>
-  <content>
 # 3-dimensional structure Representation Sharing
 
-TODO: Write a project description
+This is the backend of the **3-dimensional structure Representation Sharing (3dRS)** web application.
 
-## Installation
+<a href="https://mmb.irbbarcelona.org/3dRS"><img src="logo.png" alt="3dRS" width="200"/></a>
 
-TODO: Describe the installation process
+## Links
 
-## Usage
-
-TODO: Write usage instructions
-
-## Contributing
-
-1. Fork it!
-2. Create your feature branch: `git checkout -b my-new-feature`
-3. Commit your changes: `git commit -am 'Add some feature'`
-4. Push to the branch: `git push origin my-new-feature`
-5. Submit a pull request :D
-
-## History
-
-TODO: Write history
+[Visit the official website](https://mmb.irbbarcelona.org/3dRS)
+[Visit the official documentation]()
 
 ## Credits
 
 Genís Bayarri, Adam Hospital.
 
-Molecular Modeling and Bioinformatics Group.
+## Copyright & licensing
 
-## License
+This software has been developed by the [MMB group](https://mmb.irbbarcelona.org) at the [IRB Barcelona](https://irbbarcelona.org).
 
-TODO: Write license
-</content>
-  <tabTrigger>readme</tabTrigger>
-</snippet>
+© 2021 **Institute for Research in Biomedicine**
+
+Licensed under the **Apache License 2.0**.
+
+
