@@ -39,6 +39,19 @@ class DataController extends Controller {
 		$this->db->updateDocument($this->table, ['_id' => $id], ['$set' => $dataset]);
 		return ['success', 'Data ['.implode(', ', $datalist).'] for '.$id.' project successfully updated'];
 	}
+
+	// retrieve settings of multiple projects
+	public function retrieveProjectSettings($data) {
+		$output = $this->db->getDocuments($this->table, ['_id' => [ '$in' => $data ] ], [ 'projection' => [ 'projectSettings' => 1 ] ]);
+
+		if(!$output) {
+			$code = 404;
+            $errMsg = "Requested data not found;";
+	    	throw new \Exception($errMsg, $code);
+		}
+
+		return ['success', $output];
+	}
 	
 
 }

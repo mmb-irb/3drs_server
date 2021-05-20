@@ -29,6 +29,8 @@ $app->group('', function() use ($container) {
 		// delete representation
 		$this->delete('/{id}/{repr}', 'apiController:deleteRepresentation');
 	});
+	// clone representation
+	$this->post('/clone/{id}', 'apiController:cloneRepresentation');
 	// share project
 	$this->post('/share/{id}', 'apiController:shareProject');
 	// fork project
@@ -38,5 +40,7 @@ $app->group('', function() use ($container) {
 		// update trajectory
 		$this->patch('/{id}', 'apiController:updateTrajectory');
 	});
+	// gallery
+	$this->post('/settings', 'apiController:getProjectSettings');
 
 })->add(new CheckDBMiddleware($container));

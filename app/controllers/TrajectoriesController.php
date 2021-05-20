@@ -84,7 +84,8 @@ class TrajectoriesController extends Controller {
 				'end' => null,
 				'range' => [ 0, null],
 				'loop' => false,
-				'interpolation' => ''
+				'interpolation' => '',
+				'bounce' => false
 			],
 			'uploadDate' => $this->utils->newDate(),
 		];

@@ -46,7 +46,13 @@ class RepresentationsController extends Controller {
 			'id' => $repr, 
 			'name' => $name,
 			'visible' => true,
-			'label' => false,
+			'label' => [
+				'name' => $name,
+				'visible' => false,
+				'position' => null,
+				'size' => 10,
+				'color' => '#ffffff'
+			],
 			'opacity' => 1,
 			'settings' => $project->settings,
 			'structures' => $structures,
@@ -84,6 +90,40 @@ class RepresentationsController extends Controller {
         );
 
 		return ['success', $new_repr, $repr.' representation of '.$id.' project successfully created'];
+	}
+
+	// clone representation
+	public function cloneRepresentation($id, $data) {
+
+		if(!$project = reset($this->db->getDocuments($this->table, ['_id' => $id], []))) {
+			$code = 404;
+            $errMsg = "Requested project not found;";
+	    	throw new \Exception($errMsg, $code);
+		}
+
+		$repr = $data['id'];
+
+		if(!$project = reset($this->db->getDocuments($this->table, ['representations.id' => $repr], []))) {
+			$code = 404;
+            $errMsg = "Requested representation not found;";
+	    	throw new \Exception($errMsg, $code);
+		}
+
+		$new_repr = reset(array_filter($project->representations, function($r) use($repr) { return $r->id == $repr; }));
+
+		$new_id = uniqid('');
+		$new_repr->id = $new_id;
+		$old_name = $new_repr->name;
+		$new_repr->name = 'New '.$old_name;
+		$new_repr->label->name = 'New '.$old_name;
+
+    	$this->db->updateDocument(
+            $this->table, 
+            ['_id' => $id], 
+            ['$push' => ['representations' => $new_repr]]
+        );
+
+		return ['success', $new_repr, $new_id.' representation of '.$id.' project successfully created'];
 	}
 
 	// update representation

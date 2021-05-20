@@ -120,6 +120,16 @@ class APIController extends Controller {
 
       }
 
+      public function cloneRepresentation($request, $response, $args) {
+
+            $input = $request->getParsedBody();
+
+            list($status, $representation, $message) = $this->reprController->cloneRepresentation($args['id'], $input);
+
+            return $response->withJson(['status' => $status, 'representation' => $representation, 'message' => $message], 200, JSON_PRETTY_PRINT);
+
+      }
+
       public function updateRepresentation($request, $response, $args) {
 
             $input = $request->getParsedBody();
@@ -145,6 +155,16 @@ class APIController extends Controller {
             list($status, $message) = $this->trajectoriesController->updateTrajectory($args['id'], $input);
 
             return $response->withJson(['status' => $status, 'message' => $message], 200, JSON_PRETTY_PRINT);
+
+      }
+
+      public function getProjectSettings($request, $response, $args) {
+
+            $input = $request->getParsedBody();
+
+            list($status, $message) = $this->dataController->retrieveProjectSettings($input);
+
+            return $response->withJson(['status' => $status, 'gallery' => $message], 200, JSON_PRETTY_PRINT);
 
       }
 
