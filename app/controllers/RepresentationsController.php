@@ -50,7 +50,7 @@ class RepresentationsController extends Controller {
 				'name' => $name,
 				'visible' => false,
 				'position' => null,
-				'size' => 10,
+				'size' => 25,
 				'color' => '#ffffff'
 			],
 			'opacity' => 1,
