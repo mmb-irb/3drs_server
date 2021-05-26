@@ -31,8 +31,8 @@ return [
 		//'pdbapi' => 'https://files.rcsb.org/download/%s.pdb'
 		'pdbapi' => 'http://mdb-login.bsc.es/api/pdb/%s',
 		'filetypes' => [
-			'structure' => [ 'pdb', 'gro' ],
-			'trajectory' => [ 'dcd', 'xtc' ]
+			'structures' => [ 'pdb', 'gro' ],
+			'trajectories' => [ 'dcd', 'xtc', 'trr', 'binpos', 'netcdf', 'nc' ]
 		],
 		'expiration' => 20
 	],
