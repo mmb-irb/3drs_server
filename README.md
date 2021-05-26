@@ -1,4 +1,4 @@
-[![](https://readthedocs.org/projects/3dRS/badge/?version=latest)]()
+[![](https://readthedocs.org/projects/3drs-documentation/badge/?version=latest)](https://3drs-documentation.readthedocs.io/en/latest/?badge=latest)
 
 # 3-dimensional structure Representation Sharing
 
