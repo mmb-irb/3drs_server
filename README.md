@@ -10,7 +10,7 @@ This is the backend of the **3-dimensional structure Representation Sharing (3dR
 
 [Visit the official website](https://mmb.irbbarcelona.org/3dRS)
 
-[Visit the official documentation]()
+[Visit the official documentation](https://3drs-documentation.readthedocs.io/en/latest/)
 
 ## Credits
 
