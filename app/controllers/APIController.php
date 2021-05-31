@@ -168,4 +168,11 @@ class APIController extends Controller {
 
       }
 
+      public function getPublicProjects($request, $response, $args) {
+
+            list($status, $message) = $this->dataController->retrievePublicProjects($input);
+
+            return $response->withJson(['status' => $status, 'projects' => $message], 200, JSON_PRETTY_PRINT);
+
+      }
 }

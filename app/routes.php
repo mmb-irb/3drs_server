@@ -42,5 +42,7 @@ $app->group('', function() use ($container) {
 	});
 	// gallery
 	$this->post('/settings', 'apiController:getProjectSettings');
+	// public projects
+	$this->post('/public', 'apiController:getPublicProjects');
 
 })->add(new CheckDBMiddleware($container));

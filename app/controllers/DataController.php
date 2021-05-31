@@ -37,7 +37,23 @@ class DataController extends Controller {
 		}
 
 		$this->db->updateDocument($this->table, ['_id' => $id], ['$set' => $dataset]);
+
+		$this->updateLastUpdate($id);
+
 		return ['success', 'Data ['.implode(', ', $datalist).'] for '.$id.' project successfully updated'];
+	}
+
+	// update lastUpdate
+	public function updateLastUpdate($id) {
+
+		if(!reset($this->db->getDocuments($this->table, ['_id' => $id], []))) {
+			$code = 404;
+            $errMsg = "Requested project not found;";
+	    	throw new \Exception($errMsg, $code);
+		}
+
+		$this->db->updateDocument($this->table, ['_id' => $id], ['$set' => ['projectSettings.lastUpdate' => $this->utils->newDate()] ]);
+		return true;
 	}
 
 	// retrieve settings of multiple projects
@@ -53,5 +69,27 @@ class DataController extends Controller {
 		return ['success', $output];
 	}
 	
+	// retrieve settings of multiple projects
+	public function retrievePublicProjects($data) {
+		$output = $this->db->getDocuments($this->table, 
+			['$and' => [ 
+				['projectSettings.status' => 'rs' ], 
+				['projectSettings.public' => true]
+			]], 
+			[ 
+				'sort' => [ 'projectSettings.uploadDate' => -1 ],
+				'limit' => 10,  
+				'projection' => [ 'projectSettings' => 1 ] 
+			]
+		);
+
+		if(!$output) {
+			$code = 404;
+            $errMsg = "Requested data not found;";
+	    	throw new \Exception($errMsg, $code);
+		}
+
+		return ['success', $output];
+	}
 
 }

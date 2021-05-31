@@ -89,6 +89,8 @@ class RepresentationsController extends Controller {
             ['$push' => ['representations' => $new_repr]]
         );
 
+		$this->dataController->updateLastUpdate($id);
+
 		return ['success', $new_repr, $repr.' representation of '.$id.' project successfully created'];
 	}
 
@@ -123,6 +125,8 @@ class RepresentationsController extends Controller {
             ['$push' => ['representations' => $new_repr]]
         );
 
+		$this->dataController->updateLastUpdate($id);
+
 		return ['success', $new_repr, $new_id.' representation of '.$id.' project successfully created'];
 	}
 
@@ -148,11 +152,14 @@ class RepresentationsController extends Controller {
 			$query['representations.$.'.$key] = $value;
 		}
 
+		// update representation
         $this->db->updateDocument(
             $this->table, 
             ['$and' => [ ['_id' => $id], ['representations.id' => $repr] ]], 
             ['$set' => $query]
         );
+
+		$this->dataController->updateLastUpdate($id);
 
 		return ['success', 'Data ['.implode(', ', $datalist).'] for '.$repr.' representation of '.$id.' project successfully updated'];
 	}
@@ -183,6 +190,8 @@ class RepresentationsController extends Controller {
 		$project = reset($this->db->getDocuments($this->table, ['_id' => $id], []));
 		$new_curr_repr = end($project->representations)->id;
 		$this->db->updateDocument($this->table, ['_id' => $id], ['$set' => ['currentRepresentation' => $new_curr_repr]]);
+
+		$this->dataController->updateLastUpdate($id);
 
 		return ['success', $new_curr_repr, $repr.' representation of '.$id.' project successfully removed'];
 	}

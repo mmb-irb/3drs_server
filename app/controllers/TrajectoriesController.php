@@ -82,6 +82,7 @@ class TrajectoriesController extends Controller {
 			'settings' => [
 				'autoplay' => false,
 				'step' => 1,
+				'timeout' => 100,
 				'init' => 0,
 				'end' => null,
 				'range' => [ 0, null],
@@ -97,6 +98,8 @@ class TrajectoriesController extends Controller {
             ['$and' => [ ['_id' => $project], ['files.id' => $structure] ]],
 			['$set' => ['files.$.trajectory' => $data]]
         );
+
+		$this->dataController->updateLastUpdate($id);
 
 		return ['success', $project, $data, 'Trajectory successfully added to '.$structure.' structure'];
 
@@ -124,6 +127,8 @@ class TrajectoriesController extends Controller {
             ['$and' => [ ['_id' => $id], ['files.id' => $structure] ]], 
             ['$set' => ['files.$.trajectory.settings' => $settings]]
         );
+
+		$this->dataController->updateLastUpdate($id);
 
 		return ['success', 'Settings for '.$structure.' trajectory of '.$id.' project successfully updated'];
 

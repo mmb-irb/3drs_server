@@ -143,18 +143,20 @@ class ProjectsController extends Controller {
 		$data = [
 			'_id' => $id,
 			'orientation' => null,
+			'camera' => 'orthographic',
 			'projectSettings' => [
 				'status' => 'w',
 				'title' => 'New project',
 				'caption' => null,
 				'toasts' => true,
 				'forkable' => true,
+				'public' => true,
 				'uploadDate' => $this->utils->newDate(),
-				'expiration' => $this->utils->newExpDate()
+				'lastUpdate' => $this->utils->newDate(),
+				'expiration' => $this->utils->newExpDate(),
+				'children' => []
 			],
 			'superpositions' => [],
-			//'distances' => $content_distances,
-			//'angles' => $content_angles,
 			'measurements' => $content_measurements,
 			'background' => '#f1f1f1',
 			'files' => $content_files,
@@ -235,28 +237,63 @@ class ProjectsController extends Controller {
 		// get $id project data
 		$project = reset($this->db->getDocuments($this->table, ['_id' => $id], []));
 
-		$new_project_status = 'w';
 		// update parent project status in case is shared
-		if($type === 'share') {
+		/*if($type === 'share') {
 			
 			// get original project projectSettings
 			$d['projectSettings'] = $project->projectSettings;
 			// modify original project projectSettings
 			$d['projectSettings']->status = 'ws';
+			// update children
+			$new_project_children = $project->projectSettings->children;
+			$new_project_children[] = $new_id;
+			$d['projectSettings']->children = $new_project_children;
 			list($s, $m) = $this->dataController->updateData($id, $d);
 
 			$new_project_status = 'rs';
+		} else {
+
+			// get original project projectSettings
+			$d['projectSettings'] = $project->projectSettings;
+			// update children
+			$new_project_children = $project->projectSettings->children;
+			$new_project_children[] = $new_id;
+			$d['projectSettings']->children = $new_project_children;
+			list($s, $m) = $this->dataController->updateData($id, $d);
+
+			$new_project_status = 'wf';
+		}*/
+
+		if($type === 'share') { 
+			$old_project_status = 'ws';
+			$new_project_status = 'rs';
+		} else {
+			$old_project_status = 'rs';
+			$new_project_status = 'wf';
 		}
+
+		// get original project projectSettings
+		$d['projectSettings'] = $project->projectSettings;
+		// modify original project projectSettings
+		$d['projectSettings']->status = $old_project_status;
+		// update children
+		$new_project_children = $project->projectSettings->children;
+		$new_project_children[] = $new_id;
+		$d['projectSettings']->children = $new_project_children;
+		list($s, $m) = $this->dataController->updateData($id, $d);
 
 		// modify _id, uploadDate and expiration
 		$project->_id = $new_id;
 		$project->projectSettings->status = $new_project_status;
 		$project->projectSettings->uploadDate = $this->utils->newDate();
+		$project->projectSettings->lastUpdate = $this->utils->newDate();
 		$project->projectSettings->expiration = $this->utils->newExpDate();
+		$project->projectSettings->children = [];
 
 		// create new entry in DB
 		$this->insertData($project);
 
+		$this->dataController->updateLastUpdate($id);
 
 		return ['success', $new_id, 'New project '.$new_id.' succesfully created.'];
 
