@@ -6,3 +6,6 @@ info.php
 help.txt
 *.swp
 *.bk.*
+__pycache__
+/scripts/settings.py
+/scripts/export/

@@ -99,7 +99,7 @@ class TrajectoriesController extends Controller {
 			['$set' => ['files.$.trajectory' => $data]]
         );
 
-		$this->dataController->updateLastUpdate($id);
+		$this->dataController->updateLastUpdate($project);
 
 		return ['success', $project, $data, 'Trajectory successfully added to '.$structure.' structure'];
 

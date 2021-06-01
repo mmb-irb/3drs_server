@@ -237,33 +237,7 @@ class ProjectsController extends Controller {
 		// get $id project data
 		$project = reset($this->db->getDocuments($this->table, ['_id' => $id], []));
 
-		// update parent project status in case is shared
-		/*if($type === 'share') {
-			
-			// get original project projectSettings
-			$d['projectSettings'] = $project->projectSettings;
-			// modify original project projectSettings
-			$d['projectSettings']->status = 'ws';
-			// update children
-			$new_project_children = $project->projectSettings->children;
-			$new_project_children[] = $new_id;
-			$d['projectSettings']->children = $new_project_children;
-			list($s, $m) = $this->dataController->updateData($id, $d);
-
-			$new_project_status = 'rs';
-		} else {
-
-			// get original project projectSettings
-			$d['projectSettings'] = $project->projectSettings;
-			// update children
-			$new_project_children = $project->projectSettings->children;
-			$new_project_children[] = $new_id;
-			$d['projectSettings']->children = $new_project_children;
-			list($s, $m) = $this->dataController->updateData($id, $d);
-
-			$new_project_status = 'wf';
-		}*/
-
+		// set parent project and new project status
 		if($type === 'share') { 
 			$old_project_status = 'ws';
 			$new_project_status = 'rs';
@@ -298,7 +272,5 @@ class ProjectsController extends Controller {
 		return ['success', $new_id, 'New project '.$new_id.' succesfully created.'];
 
 	}
-
-	
 
 }
