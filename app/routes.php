@@ -40,6 +40,8 @@ $app->group('', function() use ($container) {
 		// update trajectory
 		$this->patch('/{id}', 'apiController:updateTrajectory');
 	});
+	// get project id from short URL
+	$this->post('/short/{id}', 'apiController:getIdFromShort');
 	// gallery
 	$this->post('/settings', 'apiController:getProjectSettings');
 	// public projects

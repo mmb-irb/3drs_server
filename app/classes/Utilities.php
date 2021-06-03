@@ -157,126 +157,22 @@ class Utilities extends Model {
 
 	}
 
+	public function generateShortURL($len) {
+		$hex = md5(str_shuffle("a7B0CDef6gH2iJK4L5m3noPQrSt1uVW89xyZ") . uniqid("", true));
 
+		$pack = pack('H*', $hex);
 
+		$uid = base64_encode($pack);        // max 22 chars
 
+		$uid = ereg_replace("[^A-Za-z0-9]", "", $uid);    // mixed case
 
+		if ($len<4) $len=4;
+    	if ($len>128) $len=128;
 
+		while (strlen($uid)<$len) $uid = $uid . gen_uuid(22);     // append until length achieved
 
-
-
-
-
-	/*public function downloadFile($file) {
-		
-  	if (file_exists($file)) {
- 
- 	    $finfo = finfo_open(FILEINFO_MIME_TYPE);
-      $mime = finfo_file($finfo, $file);
-      finfo_close($finfo);
-  
-      header('Content-Description: File Transfer');
-      header('Content-Type: '.$mime);
-      header("Content-Transfer-Encoding: Binary");
-      header('Content-Disposition: attachment; filename="'.basename($file).'"');
-      header('Expires: 0');
-      header('Cache-Control: must-revalidate');
-      header('Pragma: public');
-      header('Content-Length: ' . filesize($file));
-      ob_clean();
-      flush();
-      readfile($file);
-      exit;
-
-  	}
-
-	}*/
-
-
-	/*public function downloadFromApi($destination, $id, $type, $name, $pdb) {
-
-		set_time_limit(0);
-		$pdbdownloaded = fopen ($destination.'/'.$name, 'w+');
-
-		if(isset($pdb)) $ch = curl_init(sprintf($this->global['api']['ligfile'], $type, $id, $pdb));
-		else $ch = curl_init(sprintf($this->global['api']['pdbfile'], $type, $id));
-
-		curl_setopt($ch, CURLOPT_TIMEOUT, 50);
-		curl_setopt($ch, CURLOPT_FILE, $pdbdownloaded); 
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-		curl_exec($ch); 
-		curl_close($ch);
-		return fclose($pdbdownloaded);
-
+		return substr($uid, 0, $len);
 	}
-
-	public function getMoment() {
-  	
-		return date("Y/m/d*H:i:s");
- 	
-	}
-
-	public function startsWith($haystack, $needle) {
-
-     $length = strlen($needle);
-     return (substr($haystack, 0, $length) === $needle);
-	
-	}
-
-	public function getExtension($filename) {
-	
-		return pathinfo($filename, PATHINFO_EXTENSION);	
-
-	}
-
-	public function getHumanDate($date) {
-	
-		return date("Y/m/d H:i" , $date);
-	}
-
-	public function getSize($bytes) {
-
-		if ($bytes >= 1073741824) {
-			$bytes = (number_format($bytes / 1073741824, 2) + 0). ' GB';
-		}
-		elseif ($bytes >= 1048576) {
-			$bytes = (number_format($bytes / 1048576, 2) + 0) . ' MB';
-		}
-		elseif ($bytes >= 1024) {
-			$bytes = (number_format($bytes / 1024, 2) + 0). ' KB';
-		}
-		elseif ($bytes >= 0) {
-			$bytes = ($bytes + 0). ' B';
-		}
-		
-		return $bytes;
-
-	}
-
-	public function downloadXML($rest) {
-
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_URL, $rest);
-		$fileContents = curl_exec($ch);
-		curl_close($ch);
-
-		$fileContents = str_replace(array("\n", "\r", "\t"), '', $fileContents);
-
-		$fileContents = trim(str_replace('"', "'", $fileContents));
-
-		$simpleXml = simplexml_load_string($fileContents);
-
-		$json = json_encode($simpleXml);
-
-		$json = str_replace("@","",$json);
-
-		$json = json_decode($json);
-
-		return $json;
-
-	}*/
-
 	
 }
 

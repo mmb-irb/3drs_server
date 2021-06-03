@@ -12,6 +12,7 @@ return array(
     'App\\Controllers\\DataController' => $baseDir . '/app/controllers/DataController.php',
     'App\\Controllers\\ProjectsController' => $baseDir . '/app/controllers/ProjectsController.php',
     'App\\Controllers\\RepresentationsController' => $baseDir . '/app/controllers/RepresentationsController.php',
+    'App\\Controllers\\ShortURLController' => $baseDir . '/app/controllers/ShortURLController.php',
     'App\\Controllers\\TrajectoriesController' => $baseDir . '/app/controllers/TrajectoriesController.php',
     'App\\Handlers\\Error' => $baseDir . '/app/handlers/Error.php',
     'App\\Middleware\\CheckDBMiddleware' => $baseDir . '/app/middleware/CheckDBMiddleware.php',

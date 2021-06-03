@@ -107,22 +107,6 @@ class ProjectsController extends Controller {
 			];
 		}
 
-		/*$content_distances = [];
-		foreach ($files as $file) {
-			$content_distances[] = [
-				'id' => $file['id'],
-				'atomPairs' => []
-			];
-		}
-
-		$content_angles = [];
-		foreach ($files as $file) {
-			$content_angles[] = [
-				'id' => $file['id'],
-				'atomTriples' => []
-			];
-		}*/
-
 		$content_measurements = [
 			'distances' => [],
 			'angles' => []
@@ -269,7 +253,10 @@ class ProjectsController extends Controller {
 
 		$this->dataController->updateLastUpdate($id);
 
-		return ['success', $new_id, 'New project '.$new_id.' succesfully created.'];
+		if($type === 'share') $shortid = $this->shortURLController->createNew($new_id);
+		else $shortid = null;
+
+		return ['success', $new_id, $shortid, 'New project '.$new_id.' succesfully created.'];
 
 	}
 

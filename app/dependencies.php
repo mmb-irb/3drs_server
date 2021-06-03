@@ -60,6 +60,10 @@ $container['dataController'] = function($c) {
 	return new \App\Controllers\DataController($c);
 };
 
+$container['shortURLController'] = function($c) {
+	return new \App\Controllers\ShortURLController($c);
+};
+
 //GLOBALS
 $container['global'] = function($c) {
 	return $c->get('globals');

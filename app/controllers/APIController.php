@@ -96,15 +96,15 @@ class APIController extends Controller {
 
       public function shareProject($request, $response, $args) {
 
-            list($status, $project, $message) = $this->projectsController->cloneProject($args['id'], 'share');
+            list($status, $project, $shortid, $message) = $this->projectsController->cloneProject($args['id'], 'share');
 
-            return $response->withJson(['status' => $status, 'project' => $project, 'message' => $message], 200, JSON_PRETTY_PRINT);
+            return $response->withJson(['status' => $status, 'project' => $project, 'shortid' => $shortid, 'message' => $message], 200, JSON_PRETTY_PRINT);
 
       }
 
       public function forkProject($request, $response, $args) {
 
-            list($status, $project, $message) = $this->projectsController->cloneProject($args['id'], 'fork');
+            list($status, $project, $shortid, $message) = $this->projectsController->cloneProject($args['id'], 'fork');
 
             return $response->withJson(['status' => $status, 'project' => $project, 'message' => $message], 200, JSON_PRETTY_PRINT);
 
@@ -173,6 +173,14 @@ class APIController extends Controller {
             list($status, $message) = $this->dataController->retrievePublicProjects($input);
 
             return $response->withJson(['status' => $status, 'projects' => $message], 200, JSON_PRETTY_PRINT);
+
+      }
+
+      public function getIdFromShort($request, $response, $args) {
+
+            list($status, $project) = $this->shortURLController->getProject($args['id']);
+
+            return $response->withJson(['status' => $status, 'project' => $project], 200, JSON_PRETTY_PRINT);
 
       }
 }
