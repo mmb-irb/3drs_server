@@ -3,6 +3,7 @@ import shutil
 from pymongo import MongoClient
 from pathlib import Path
 import gridfs
+from bson.objectid import ObjectId
 from settings import *
 
 # connect to DB
