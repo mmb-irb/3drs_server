@@ -9,6 +9,7 @@ from settings import *
 client = MongoClient('mongodb://%s:%s@%s/?retryWrites=false' % (username, password, host))
 db = client[dbname]
 representations = db['representations']
+shorturls = db['shorturls']
 fs = gridfs.GridFS(db)
 
 for rep in representations.find({ 
@@ -41,6 +42,10 @@ for rep in representations.find({
 		representations.delete_one( { '_id': id })
 		print('  removing document ' + id)
 
+		# 4) remove shorturl from DB
+		shorturls.delete_one( { 'project': id })
+		print('  removing shorturl ' + id)
+
 		print('####')
 		print('')
 
@@ -52,6 +57,10 @@ for rep in representations.find({
 		# 1) remove job from DB
 		representations.delete_one( { '_id': id })
 		print('  removing document ' + id)
+
+		# 2) remove shorturl from DB
+		shorturls.delete_one( { 'project': id })
+		print('  removing shorturl ' + id)
 
 		print('####')
 		print('')
