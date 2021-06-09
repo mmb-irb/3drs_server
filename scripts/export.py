@@ -6,10 +6,6 @@ import gridfs
 from bson.objectid import ObjectId
 from settings import *
 
-'''
-60a648930bb674.00094474,60a64a9f956699.64250026,60a617b6ecc358.87040084,60a0170e7b9041.47453401,60a018efc21a50.60836011,60a2eb0061f600.54953893,60a61568794803.96902889,60ae396178b381.39706794
-'''
-
 # connect to DB
 client = MongoClient('mongodb://%s:%s@%s/?retryWrites=false' % (username, password, host))
 db = client[dbname]
