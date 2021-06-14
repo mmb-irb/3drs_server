@@ -60,17 +60,17 @@ class RepresentationsController extends Controller {
             'radius' => [
 				'licorice' => [
 					'value' => 0.3,
-					'min' => 0.2,
+					'min' => 0.1,
 					'max' => 1
 				],
 				'ball+stick' => [
 					'value' => 0.3,
-					'min' => 0.2,
+					'min' => 0.1,
 					'max' => 0.6
 				],
 				'backbone' => [
 					'value' => 0.6,
-					'min' => 0.2,
+					'min' => 0.1,
 					'max' => 1
 				],
 				'spacefill' => [
