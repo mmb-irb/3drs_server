@@ -31,6 +31,11 @@ class RepresentationsController extends Controller {
 				'selection' => [
 					'string' => '*',
 					'custom' => '',
+					'distance' => [
+						'active' => false,
+						'radius' => 5,
+						'groups' => false
+					],
 					'molecules' => []
 				]
 			];
@@ -77,6 +82,11 @@ class RepresentationsController extends Controller {
 					'value' => 1.5,
 					'min' => 1,
 					'max' => 3
+				],
+				'cartoon' => [
+					'value' => 0.3,
+					'min' => 0.1,
+					'max' => 1
 				]
 			],
             'color_scheme' => 'sstruc',
