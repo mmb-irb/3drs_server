@@ -1,4 +1,5 @@
 [![](https://readthedocs.org/projects/3drs-documentation/badge/?version=latest)](https://3drs-documentation.readthedocs.io/en/latest/?badge=latest)
+[![](https://zenodo.org/badge/DOI/10.3389/fmolb.2021.726232.svg)](https://doi.org/10.3389/fmolb.2021.726232)
 
 # 3-dimensional structure Representation Sharing
 
