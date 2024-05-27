@@ -24,7 +24,31 @@ keywords:
   - "Interactive figures"
   - "FAIR"
 license: "Apache-2.0"
-message: "If you use this software, please cite it using these metadata."
-title: "My Research Software"
+message: "If you use this dataset, please cite it using the metadata from this file."
+repository-code: "https://github.com/gbayarri/3drs_server"
+title: "3dRS, a Web-Based Tool to Share Interactive Representations of 3D Biomolecular Structures and Molecular Dynamics Trajectories."
 doi: "10.3389/fmolb.2021.726232"
-journal: "Frontiers in Molecular Biosciences"
+url: "https://mmb.irbbarcelona.org/3dRS/"
+preferred-citation:
+  authors:
+    - affiliation: "Institute for Research in Biomedicine (IRB Barcelona)"
+      family-names: "Bayarri"
+      given-names: "Genís"
+      orcid: "https://orcid.org/0000-0003-0513-0288"
+    - affiliation: "Institute for Research in Biomedicine (IRB Barcelona)"
+      family-names: "Hospital"
+      given-names: "Adam"
+      orcid: "https://orcid.org/0000-0002-8291-8071"
+      email: "adam.hospital@irbbarcelona.org"
+    - affiliation: "Institute for Research in Biomedicine (IRB Barcelona), University of Barcelona (UB)"
+      family-names: "Orozco"
+      given-names: "Modesto"
+      orcid: "https://orcid.org/0000-0002-8608-3278"
+      email: "modesto.orozco@irbbarcelona.org"
+  title: "3dRS, a Web-Based Tool to Share Interactive Representations of 3D Biomolecular Structures and Molecular Dynamics Trajectories."
+  type: article
+  doi: "10.3389/fmolb.2021.726232"
+  journal: "Frontiers in Molecular Biosciences"
+  month: 8
+  volume: 8
+  year: 2021
