@@ -26,3 +26,5 @@ keywords:
 license: "Apache-2.0"
 message: "If you use this software, please cite it using these metadata."
 title: "My Research Software"
+doi: "10.3389/fmolb.2021.726232"
+journal: "Frontiers in Molecular Biosciences"
