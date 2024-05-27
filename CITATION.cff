@@ -1,36 +1,35 @@
-abstract: 3D Representation Sharing (3dRS) is a web-based tool designed to share biomolecular structure representations, including 4D ensembles derived from Molecular Dynamics (MD) trajectories. The server offers a team working in different locations a single URL to share and discuss structural data in an interactive fashion, with the possibility to use it as a live figure for scientific papers. The web tool allows an easy upload of structures and trajectories in different formats. The 3D representation, powered by NGL viewer, offers an interactive display with smooth visualization in modern web browsers. Multiple structures can be loaded and superposed in the same scene. 1D sequences from the loaded structures are presented and linked to the 3D representation. Multiple, pre-defined 3D molecular representations are available. The powerful NGL selection syntax allows the definition of molecular regions that can be then displayed using different representations. Important descriptors such as distances or interactions can be easily added into the representation. Trajectory frames can be explored using a common video player control panel. Trajectories are efficiently stored and transferred to the NGL viewer thanks to an MDsrv-based data streaming. The server design offers all functionalities in one single web page, with a curated user experience, involving a minimum learning curve. Extended documentation is available, including a gallery with a collection of scenes.
+abstract: "3D Representation Sharing (3dRS) is a web-based tool designed to share biomolecular structure representations, including 4D ensembles derived from Molecular Dynamics (MD) trajectories. The server offers a team working in different locations a single URL to share and discuss structural data in an interactive fashion, with the possibility to use it as a live figure for scientific papers. The web tool allows an easy upload of structures and trajectories in different formats. The 3D representation, powered by NGL viewer, offers an interactive display with smooth visualization in modern web browsers. Multiple structures can be loaded and superposed in the same scene. 1D sequences from the loaded structures are presented and linked to the 3D representation. Multiple, pre-defined 3D molecular representations are available. The powerful NGL selection syntax allows the definition of molecular regions that can be then displayed using different representations. Important descriptors such as distances or interactions can be easily added into the representation. Trajectory frames can be explored using a common video player control panel. Trajectories are efficiently stored and transferred to the NGL viewer thanks to an MDsrv-based data streaming. The server design offers all functionalities in one single web page, with a curated user experience, involving a minimum learning curve. Extended documentation is available, including a gallery with a collection of scenes."
 authors:
-  - affiliation: Institute for Research in Biomedicine (IRB Barcelona)
-    family-names: Bayarri
-    given-names: Genís
-    orcid: https://orcid.org/0000-0003-0513-0288
-  - affiliation: Institute for Research in Biomedicine (IRB Barcelona)
-    family-names: Hospital
-    given-names: Adam
-    orcid: https://orcid.org/0000-0002-8291-8071
-    email: adam.hospital@irbbarcelona.org
-  - affiliation: Institute for Research in Biomedicine (IRB Barcelona), University
-      of Barcelona (UB)
-    family-names: Orozco
-    given-names: Modesto
-    orcid: https://orcid.org/0000-0002-8608-3278
-    email: modesto.orozco@irbbarcelona.org
+  - affiliation: "Institute for Research in Biomedicine (IRB Barcelona)"
+    family-names: "Bayarri"
+    given-names: "Genís"
+    orcid: "https://orcid.org/0000-0003-0513-0288"
+  - affiliation: "Institute for Research in Biomedicine (IRB Barcelona)"
+    family-names: "Hospital"
+    given-names: "Adam"
+    orcid: "https://orcid.org/0000-0002-8291-8071"
+    email: "adam.hospital@irbbarcelona.org"
+  - affiliation: "Institute for Research in Biomedicine (IRB Barcelona), University of Barcelona (UB)"
+    family-names: "Orozco"
+    given-names: "Modesto"
+    orcid: "https://orcid.org/0000-0002-8608-3278"
+    email: "modesto.orozco@irbbarcelona.org"
 cff-version: 1.2.0
 date-released: 2021-08-13
 keywords:
-  - 3D representation
-  - biomolecular structures
-  - data sharing
-  - molecular dynamics
-  - interactive figures
-  - FAIR
-license: Apache-2.0
-message: If you use this dataset, please cite it using the metadata from this file.
-repository-code: https://github.com/gbayarri/3drs_server
-title: 3dRS, a Web-Based Tool to Share Interactive Representations of 3D Biomolecular Structures and Molecular Dynamics Trajectories.
-doi: 10.3389/fmolb.2021.726232
-journal: Frontiers in Molecular Biosciences
+  - "3D representation"
+  - "Biomolecular structures"
+  - "Data sharing"
+  - "Molecular dynamics"
+  - "Interactive figures"
+  - "FAIR"
+license: "Apache-2.0"
+message: "If you use this dataset, please cite it using the metadata from this file."
+repository-code: "https://github.com/gbayarri/3drs_server"
+title: "3dRS, a Web-Based Tool to Share Interactive Representations of 3D Biomolecular Structures and Molecular Dynamics Trajectories."
+doi: "10.3389/fmolb.2021.726232"
+journal: "Frontiers in Molecular Biosciences"
 month: 8
 volume: 8
 year: 2021
-url: https://mmb.irbbarcelona.org/3dRS/
+url: "https://mmb.irbbarcelona.org/3dRS/"
