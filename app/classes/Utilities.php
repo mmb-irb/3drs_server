@@ -89,7 +89,7 @@ class Utilities extends Model {
 	// change function name
 	public function getPDBList($str) {
 
-		$pdbs = $this->dbPDB->getDocuments($this->tablePDB, ['_id' => ['$regex' => strtoupper($str)]], ['projection' => ['_id'=>1]]);
+		/*$pdbs = $this->dbPDB->getDocuments($this->tablePDB, ['_id' => ['$regex' => strtoupper($str)]], ['projection' => ['_id'=>1]]);
 
 		$aux = array();
  	 	foreach ($pdbs as $arr) {
@@ -104,7 +104,46 @@ class Utilities extends Model {
 			$len = count($aux);
 		}
 
-		return $seeker;
+		return $seeker;*/
+
+		$url = sprintf($this->global['pdbapi'], "?fields=_id");
+
+		// Fetch data from URL
+		$data = file_get_contents($url);
+
+		if (empty($data)) {
+			return [];
+		}
+
+		// Parse the plain text response
+		$lines = explode("\n", $data);
+		$results = array();
+		
+		// Convert search string to uppercase for case-insensitive matching
+		$searchStr = strtoupper($str);
+		
+		foreach ($lines as $line) {
+			$line = trim($line);
+			
+			// Skip empty lines and comment lines (starting with #)
+			if (empty($line) || strpos($line, '#') === 0) {
+				continue;
+			}
+			
+			// Extract the PDB ID (first column before tab)
+			$parts = explode("\t", $line);
+			$pdbId = trim($parts[0]);
+			
+			// Check if the PDB ID contains the search string
+			if (!empty($pdbId) && strpos(strtoupper($pdbId), $searchStr) !== false) {
+				array_push($results, $pdbId);
+			}
+		}
+
+		// Sort results alphabetically
+		sort($results);
+
+		return $results;
 
 	}
 

@@ -13,7 +13,8 @@ return [
 			'host'     => 'XXX',
 			'database' => 'XXX',
 			'username' => 'XXX',
-			'password' => 'XXX'
+			'password' => 'XXX',
+			'port'     => 'XXX'
 		],
 		'dbPDB' => [
 			'host'     => 'XXX',

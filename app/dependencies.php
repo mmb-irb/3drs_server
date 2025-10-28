@@ -23,7 +23,8 @@ $container['logger'] = function ($c) {
 // DB dependency
 $container['db'] = function ($c) {
 	$db = $c->get('settings')['db'];
-	$mng = new \MongoDB\Driver\Manager("mongodb://".$db['username'].":".$db['password']."@".$db['host']);
+	//$mng = new \MongoDB\Driver\Manager("mongodb://".$db['username'].":".$db['password']."@".$db['host']);
+	$mng = new \MongoDB\Driver\Manager("mongodb://".$db['username'].":".$db['password']."@".$db['host'].":".$db['port']."/?authSource=".$db['database']."&retryWrites=false");
 	return new \App\Models\DB($mng, $db['database']);
 };
 
