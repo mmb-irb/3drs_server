@@ -203,12 +203,12 @@ class Utilities extends Model {
 
 		$uid = base64_encode($pack);        // max 22 chars
 
-		$uid = ereg_replace("[^A-Za-z0-9]", "", $uid);    // mixed case
+		$uid = preg_replace("/[^A-Za-z0-9]/", "", $uid);    // mixed case
 
 		if ($len<4) $len=4;
     	if ($len>128) $len=128;
 
-		while (strlen($uid)<$len) $uid = $uid . gen_uuid(22);     // append until length achieved
+		while (strlen($uid)<$len) $uid = $uid . $this->generateShortURL(22);     // append until length achieved
 
 		return substr($uid, 0, $len);
 	}
