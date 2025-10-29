@@ -58,6 +58,13 @@ class DB {
 			}
 		}
 
+		// Handle objects (like stdClass from MongoDB queries)
+		if (is_object($data) && !($data instanceof \DateTime)) {
+			foreach ($data as $key => $value) {
+				$data->$key = $this->convertDateTimeToArray($value);
+			}
+		}
+
 		return $data;
 	}
 
