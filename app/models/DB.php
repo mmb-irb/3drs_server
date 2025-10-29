@@ -31,12 +31,34 @@ class DB {
 
 	public function insertDocument($collection, $doc) {
 	
+		// Convert DateTime objects to array format
+		$doc = $this->convertDateTimeToArray($doc);
+
 		$bulk = new \MongoDB\Driver\BulkWrite;
     
     	$bulk->insert($doc);
 
 		$this->mng->executeBulkWrite($this->database.".".$collection, $bulk);
 
+	}
+
+	private function convertDateTimeToArray($data) {
+		if ($data instanceof \DateTime) {
+			// Convert PHP DateTime to array format to match the old VM format
+			return [
+				'date' => $data->format('Y-m-d H:i:s.u'),
+				'timezone_type' => 3,
+				'timezone' => $data->getTimezone()->getName()
+			];
+		}
+
+		if (is_array($data)) {
+			foreach ($data as $key => $value) {
+				$data[$key] = $this->convertDateTimeToArray($value);
+			}
+		}
+
+		return $data;
 	}
 
 	public function updateDocument($collection, $doc, $set, $options = null) {
